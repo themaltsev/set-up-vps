@@ -27,13 +27,23 @@ alias pip='/usr/bin/pip3'
 django-admin startproject filmsapp 
 && cd filmsapp
 python -m venv env 
-C:\Users\admin\Desktop\Back-django\filmsapp\env\Scripts\activate.bat
-env/bin source activate
+
+#windows C:\Users\admin\Desktop\Back-django\filmsapp\env\Scripts\activate.bat
+
+#linux env/bin source activate
+
 pip install --upgrade pip
+
 pip install django
+
 pip install djangorestframework
+
 pip install django-rest-knox
+
 pip freeze > requirements.txt
+
 python manage.py startapp films
+
 tree -L 3
+
 python manage.py runserver 0.0.0.0:8000
