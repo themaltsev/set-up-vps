@@ -1,1 +1,1 @@
-# settup-vps-frodjango
+# set up vps for django
