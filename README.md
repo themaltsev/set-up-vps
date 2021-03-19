@@ -1,11 +1,16 @@
 # SET UP VPS UBUNTU DEBIAN for DJANGO 3.1.*
 
+# Я ВСЁ ДЕЛАЛ ИЗ ПО РУТА
+
+#СМЕНА ПАРОЛЯ
+passwd 
 
 apt update
 apt upgrade
 apt install curl nginx wget nano 
 
 # Не обязательно Красивый шел для консоли
+apt-get install -y zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 #install last python 3.9.*
