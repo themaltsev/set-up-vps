@@ -1,4 +1,4 @@
-# set up vps for django
+# SET UP VPS UBUNTU DEBIAN for DJANGO 3.1.*
 
 
 apt update
