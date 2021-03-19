@@ -5,23 +5,8 @@ apt update
 apt upgrade
 apt install curl nginx wget nano 
 
-#good shel for console 
+# Не обязательно Красивый шел для консоли
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-
-
-Time to change your default shell to zsh:
-Do you want to change your default shell to zsh? [Y/n] y
-Changing the shell...
-Shell successfully changed to '/usr/bin/zsh'.
-
-         __                                     __
-  ____  / /_     ____ ___  __  __   ____  _____/ /_
- / __ \/ __ \   / __ `__ \/ / / /  /_  / / ___/ __ \
-/ /_/ / / / /  / / / / / / /_/ /    / /_(__  ) / / /
-\____/_/ /_/  /_/ /_/ /_/\__, /    /___/____/_/ /_/
-                        /____/                       
-....is now installed!
-
 
 #install last python 3.9.*
 
