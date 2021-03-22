@@ -28,6 +28,8 @@ Install oh-my-zsh:
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
+ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
+
 #install last python 3.9.*
 
 api install python3.9
