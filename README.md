@@ -1,6 +1,7 @@
 # SET UP VPS UBUNTU DEBIAN for DJANGO 3.1.*
 
 
+
 Проверяем обновы
 apt update
 
@@ -10,6 +11,15 @@ apt upgrade
 
 #СМЕНА ПАРОЛЯ
 passwd 
+
+##### Мониторинг сервера 
+apt install htop -y
+htop
+
+##### АВТОЗАГРУЗКА 
+
+apt install rcconf
+rcconf
 
 apt install curl wget nano git  tree -y
 
