@@ -23,6 +23,12 @@ rcconf
 
 apt install curl wget nano git  tree -y
 
+####last NODE JS ####
+
+sudo apt-get install curl software-properties-common
+curl -sL https://deb.nodesource.com/setup_15.x | sudo bash
+
+
 # Не обязательно Красивый шел для консоли Install oh-my-zsh:
 
 apt install zsh -y
