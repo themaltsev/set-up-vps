@@ -1,5 +1,6 @@
 # SET UP VPS UBUNTU DEBIAN for DJANGO 3.1.*
 
+
 Проверяем обновы
 apt update
 
@@ -10,30 +11,19 @@ apt upgrade
 #СМЕНА ПАРОЛЯ
 passwd 
 
+apt install curl wget nano git  tree -y
 
+# Не обязательно Красивый шел для консоли Install oh-my-zsh:
 
-
-source.list 
-
-deb http://ftp.debian.org/debian stretch main contrib non-free
-deb-src http://ftp.debian.org/debian stretch main contrib non-free
-
-deb http://ftp.debian.org/debian stretch-updates main contrib non-free
-deb-src http://ftp.debian.org/debian stretch-updates main contrib non-free
-
-deb http://security.debian.org/ stretch/updates main contrib non-free
-deb-src http://security.debian.org/ stretch/updates main contrib non-free
-deb http://ftp.debian.org/debian stretch-backports main contrib non-free
-
-
-
-apt install curl nginx wget nano git
-
-# Не обязательно Красивый шел для консоли
-sudo apt-get install -y zsh tree redis-server nginx zlib1g-dev libbz2-dev libreadline-dev llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev liblzma-dev python3-dev python-imaging python3-lxml libxslt-dev python-libxml2 python-libxslt1 libffi-dev libssl-dev python-dev gnumeric libsqlite3-dev libpq-dev libxml2-dev libxslt1-dev libjpeg-dev libfreetype6-dev libcurl4-openssl-dev supervisor
-Install oh-my-zsh:
+apt install zsh -y
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+
+sudo apt-get install -y redis-server nginx zlib1g-dev libbz2-dev libreadline-dev llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev liblzma-dev python3-dev python-imaging python3-lxml libxslt-dev python-libxml2 python-libxslt1 libffi-dev libssl-dev python-dev gnumeric libsqlite3-dev libpq-dev libxml2-dev libxslt1-dev libjpeg-dev libfreetype6-dev libcurl4-openssl-dev supervisor
+
+
+#nginx
 
 ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
 
