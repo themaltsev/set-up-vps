@@ -51,6 +51,11 @@ ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
 
 #### CERTBOR FOR SSL HTTPS #######
 
+apt install certbot 
+
+#certbot-python-nginx
+
+certbot --nginx 
 
 #### CERTBOR FOR SSL HTTPS #######
 
