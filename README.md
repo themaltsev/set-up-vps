@@ -12,21 +12,47 @@ apt upgrade
 #СМЕНА ПАРОЛЯ
 passwd 
 
+
+#locale
+#убеждаемся что отсутствует русский язык
+#Устанавливаем поддержку русского языка
+
+apt-get install locales
+locale-gen ru_RU.UTF-8
+
+LANG="ru_RU.UTF-8"
+после чего запускаем:
+
+dpkg-reconfigure locales
+Выбираем русский язык и другие параметры
+
+apt-get install console-cyrillic
+Выполняем настройку языкового пакета:
+
+dpkg-reconfigure console-cyrillic
+
+
+Если в PuTTy язык не сменился на русский попробуйте выполнить команду:
+export LC_ALL=ru_RU.UTF-8
+export LANG=ru_RU.UTF-8
+
+
+
 ##### Мониторинг сервера 
 apt install htop -y
-htop
+
 
 ##### АВТОЗАГРУЗКА 
 
 apt install rcconf
-rcconf
+
 
 apt install curl wget nano git  tree -y
 
 ####last NODE JS ####
 
-sudo apt-get install curl software-properties-common
-curl -sL https://deb.nodesource.com/setup_15.x | sudo bash
+apt-get install curl software-properties-common
+curl -sL https://deb.nodesource.com/setup_15.x | bash
 
 
 # Не обязательно Красивый шел для консоли Install oh-my-zsh:
@@ -48,12 +74,13 @@ Add the following line to /etc/apt/sources.list:
 deb https://nginx.org/packages/debian/ stretch nginx
 Install GPG key of the repository:
 
-# wget https://nginx.org/keys/nginx_signing.key
-# sudo apt-key add nginx_signing.key
-Update the package index:
-# sudo apt-get update
-Install nginx deb package:
-# sudo apt-get install nginx
+wget https://nginx.org/keys/nginx_signing.key
+ apt-key add nginx_signing.key
+#Update the package index:
+
+apt-get update
+#Install nginx deb package:
+apt-get install nginx
 
 ➜  ~ nginx -v
 nginx version: nginx/1.18.0
@@ -86,12 +113,17 @@ echo "deb https://packages.sury.org/php/ stretch main" | tee /etc/apt/sources.li
 apt update
 apt install php7.4
 
+№перенаправить» на другую альтернативу можно, например, так:
+
+update-alternatives --config php
 
 ➜  ~ php -v
 PHP 7.4.16 (cli) (built: Mar  5 2021 08:37:59) ( NTS )
 
 # это не обязательно
 #apt install php7.4-cli php7.4-common php7.4-curl php7.4-mbstring php7.4-mysql php7.4-xml
+
+Если проблемы удаляем php 8.0
 
 ########-PHP-last-3######
 
