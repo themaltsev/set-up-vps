@@ -64,6 +64,35 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 
 apt-get install -y redis-server nginx zlib1g-dev libbz2-dev libreadline-dev llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev liblzma-dev python3-dev python-imaging python3-lxml libxslt-dev python-libxml2 python-libxslt1 libffi-dev libssl-dev python-dev gnumeric libsqlite3-dev libpq-dev libxml2-dev libxslt1-dev libjpeg-dev libfreetype6-dev libcurl4-openssl-dev supervisor
 
+######--APACHE2--#########
+
+apache2/ports.conf *:9000
+
+000-default.conf
+
+<VirtualHost *:9000>
+ServerAdmin webmaster@localhost
+DocumentRoot /var/www/back
+ErrorLog ${APACHE_LOG_DIR}/error.log
+CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+
+Убедитесь, что веб-сервер прослушивает нужный порт:
+
+netstat -tlpn
+
+Вывод команды должен выглядеть так:
+
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      2498/sshd
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      8376/nginx: master
+tcp6       0      0 :::22                   :::*                    LISTEN      2498/sshd
+tcp6       0      0 :::9000                 :::*                    LISTEN      8042/apache2
+
+
+######--APACHE2--#########
 
 
 ##########-NGINX-##########
@@ -84,6 +113,15 @@ apt-get install nginx
 
 ➜  ~ nginx -v
 nginx version: nginx/1.18.0
+
+
+location ~ \.php$ {
+proxy_pass http://server-ip:9000;
+proxy_set_header Host $host;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header X-Forwarded-Proto $scheme;
+}
 
 
 ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
