@@ -92,6 +92,17 @@ tcp6       0      0 :::22                   :::*                    LISTEN      
 tcp6       0      0 :::9000                 :::*                    LISTEN      8042/apache2
 
 
+/etc/php/7.0/apache2/php.ini
+Шаг - 2: теперь нужно увеличить значения ниже в файле php.ini .
+
+memory_limit = 1500MB
+
+post_max_size = 1500MB
+
+upload_max_filesize = 1500MB
+
+
+
 ######--APACHE2--#########
 
 
