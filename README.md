@@ -97,6 +97,14 @@ tcp6       0      0 :::9000                 :::*                    LISTEN      
 
 ##########-NGINX-##########
 
+#nginx.conf
+
+user  www-data;
+worker_processes  1; КОЛВО ЯДЕР +1
+
+ДОБАВИМ ПАПКУ БЕЗ ВСЯКИХ .CONF И БЕЗ ВСЯКИХ ССЫЛОК
+include /etc/nginx/configs/*;
+
 apt install ca-certificates apt-transport-https 
 
 Add the following line to /etc/apt/sources.list:
@@ -115,6 +123,7 @@ apt-get install nginx
 nginx version: nginx/1.18.0
 
 
+МУТИМ ЧЕРЕ АПАЧИ 
 location ~ \.php$ {
 proxy_pass http://server-ip:9000;
 proxy_set_header Host $host;
@@ -123,7 +132,19 @@ proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 proxy_set_header X-Forwarded-Proto $scheme;
 }
 
+МУТИМ ЧЕРЕЗ СОКЕТ
 
+location ~* \.php$ {
+root /var/www/back; ОБЯЗАТЕЛЬНО ПУТЬ ЕБАЛСЯ ПОЛ-ДНЯ!!!!!
+fastcgi_split_path_info ^(.+\.php)(/.+)$;
+fastcgi_pass unix:/run/php/php7.4-fpm.sock; # подключаем сокет php-fpm
+fastcgi_index index.php;
+fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+include fastcgi_params;
+}
+
+
+СИМВОЛКА ЕСЛИ НУЖНА
 ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
 
 
@@ -140,6 +161,10 @@ certbot --nginx
 
 #### CERTBOR FOR SSL HTTPS #######
 
+
+------------- On Debian and Ubuntu -------------
+$ cat /var/log/nginx/error.log
+$ cat /var/log/php7.4-fpm.log
 
 
 ########-PHP-last-3######
