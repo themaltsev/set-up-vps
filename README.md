@@ -257,17 +257,59 @@ alias python='/usr/bin/python3.9'
 
 alias pip='/usr/bin/pip3'
 
+$ mkdir djangoprojectname
+$ cd djangoprojectname/
+$ virtualenv env
+$ source ./env/bin/activate
 
-$ apt install python3-venv
-$ mkdir my_django_app
-$ python3 -m venv venv
-$ venv/bin source activate
-$ pip install django
-$ pip install djangorestframework
 
-$ cd куда надо
+$ pip install django gunicorn psycopg2-binary djangorestframework
+
 $ django-admin startproject back
-pip3 freeze > requirements.txt
+pip freeze > requirements.txt
+
+tree -L 3
+
+$ nano ~/back/back/settings.py
+
+ALLOWED_HOSTS = ['*']
+
+Запускаем Django
+
+$ python3.9 manage.py runserver 0.0.0.0:8000
+
+проверяем - работает?
+
+ctrl+c
+
+Миграции
+
+$ python3.9 manage.py makemigrations
+$ python3.9 manage.py migrate
+
+
+$ gunicorn --bind 0.0.0.0:8000 back.wsgi
+
+проверяем - работает?
+
+ctrl+c
+
+
+Должны получить 
+(venv) ➜  back gunicorn --bind 0.0.0.0:8000 back.wsgi
+[2021-03-25 10:16:25 +0000] [800] [INFO] Starting gunicorn 20.0.4
+[2021-03-25 10:16:25 +0000] [800] [INFO] Listening at: http://0.0.0.0:8000 (800)
+[2021-03-25 10:16:25 +0000] [800] [INFO] Using worker: sync
+[2021-03-25 10:16:25 +0000] [801] [INFO] Booting worker with pid: 801
+
+
+### УЗНАТЬ ПУТЬ для Gunicorn.service в виртуалке
+$ which gunicorn
+#/home/back/env/bin/gunicorn
+
+
+Выходим с виртуалки
+$ deactivate
 
 
 #### DATA BASE #######
@@ -282,53 +324,78 @@ $ back python3 manage.py migrate
 
 python3 manage.py startapp "new__app"
 
-tree -L 3
-
-nano ~/back/back/settings.py
-
-ALLOWED_HOSTS = ['*']
-
-Запускаем Django
-
-python3 manage.py runserver 0.0.0.0:8000
 
 #########--GUNICORN--############
 
-Если не в виртуалке
-$ source venv/bin/activate
+$ nano /etc/systemd/system/gunicorn.socket ### Добавить содержимое
 
-$ pip install gunicorn psycopg2-binary
+[Unit]
+Description=gunicorn socket
 
-$ cd ~/back
-$ gunicorn --bind 0.0.0.0:8000 back.wsgi
+[Socket]
+ListenStream=/run/gunicorn.sock
 
-Должны получить 
-(venv) ➜  back gunicorn --bind 0.0.0.0:8000 back.wsgi
-[2021-03-25 10:16:25 +0000] [800] [INFO] Starting gunicorn 20.0.4
-[2021-03-25 10:16:25 +0000] [800] [INFO] Listening at: http://0.0.0.0:8000 (800)
-[2021-03-25 10:16:25 +0000] [800] [INFO] Using worker: sync
-[2021-03-25 10:16:25 +0000] [801] [INFO] Booting worker with pid: 801
+[Install]
+WantedBy=sockets.target
 
-Выходим с виртуалки
-$ deactivate
 
 $ nano /etc/systemd/system/gunicorn.service ### Добавить содержимое
 
+
+
 [Unit]
 Description=gunicorn daemon
+Requires=gunicorn.socket
 After=network.target
 
 [Service]
 User=root
 Group=www-data
-WorkingDirectory=/root/cloudproject
-ExecStart=/root/cloudproject/cloudenv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/root/myproject/myproject.sock myproject.wsgi:application
+WorkingDirectory=/home/back/back
+ExecStart=/home/back/env/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind unix:/run/gunicorn.sock \
+          back.wsgi:application
 
 [Install]
 WantedBy=multi-user.target
 
+
 $ systemctl start gunicorn
 $ systemctl enable gunicorn
 
+И обязательно тестируем, что всё работает!
 
+$ systemctl status gunicorn.socket
+
+$ journalctl -u gunicorn.socket
+
+
+$ chown -R www-data:www-data /home/back/back
+$ usermod -aG www-data mad
+$ chmod go-rwx /home/back/back
+$ chmod go+x /home/back/back
+$ chgrp -R www-data /home/back/back
+$ chmod -R go-rwx /home/back/back
+$ chmod -R g+rwx /home/back/back
+
+
+
+
+### debag #####
+
+curl --unix-socket /run/gunicorn.sock localhost
+tail -F /var/log/nginx/error.log
+journalctl -u gunicorn
+systemctl status gunicorn.socket
+systemctl status gunicorn
+### debag #####
+
+
+### restart ####
+systemctl daemon-reload
+systemctl restart gunicorn.socket
+systemctl restart gunicorn
+### restart ####
 
