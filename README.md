@@ -1,4 +1,4 @@
-# DEBIAN VPS SET UP NGINX 1.18.* HTTP2 HTTPS PHP 7.4*  PYTHON 3.9.* LAST MYSQL PHPMYADMIN POSTGRESQL PHPPGADMIN  DJANGO 3.1.* GUICONR VENV
+# DEBIAN VPS SET UP NGINX 1.18.* HTTP2 HTTPS PHP 7.4*   PYTHON 3.9.* LAST MYSQL PHPMYADMIN POSTGRESQL PHPPGADMIN  DJANGO 3.1.* GUICONR VENV
 
 
 
@@ -402,4 +402,19 @@ systemctl daemon-reload
 systemctl restart gunicorn.socket
 systemctl restart gunicorn
 ### restart ####
+
+
+#### СКрипт который задаёт права для папок и файлов 
+#!/bin/bash
+
+dir=/var/www/site
+user=root
+
+echo "Set permissions for $dir...";
+echo "CHOWN files...";
+chown -R $user:$user "$dir";
+echo "CHMOD directories...";
+find "$dir" -type d -exec chmod 0755 '{}' \;
+echo "CHMOD files...";
+find "$dir" -type f -exec chmod 0644 '{}' \;
 
