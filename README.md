@@ -280,9 +280,55 @@ pip install mysqlclient
 $ back python3 manage.py makemigrations
 $ back python3 manage.py migrate
 
-
 python3 manage.py startapp "new__app"
 
 tree -L 3
 
+nano ~/back/back/settings.py
+
+ALLOWED_HOSTS = ['*']
+
+Запускаем Django
+
 python3 manage.py runserver 0.0.0.0:8000
+
+#########--GUNICORN--############
+
+Если не в виртуалке
+$ source venv/bin/activate
+
+$ pip install gunicorn psycopg2-binary
+
+$ cd ~/back
+$ gunicorn --bind 0.0.0.0:8000 back.wsgi
+
+Должны получить 
+(venv) ➜  back gunicorn --bind 0.0.0.0:8000 back.wsgi
+[2021-03-25 10:16:25 +0000] [800] [INFO] Starting gunicorn 20.0.4
+[2021-03-25 10:16:25 +0000] [800] [INFO] Listening at: http://0.0.0.0:8000 (800)
+[2021-03-25 10:16:25 +0000] [800] [INFO] Using worker: sync
+[2021-03-25 10:16:25 +0000] [801] [INFO] Booting worker with pid: 801
+
+Выходим с виртуалки
+$ deactivate
+
+$ nano /etc/systemd/system/gunicorn.service ### Добавить содержимое
+
+[Unit]
+Description=gunicorn daemon
+After=network.target
+
+[Service]
+User=root
+Group=www-data
+WorkingDirectory=/root/cloudproject
+ExecStart=/root/cloudproject/cloudenv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/root/myproject/myproject.sock myproject.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+
+$ systemctl start gunicorn
+$ systemctl enable gunicorn
+
+
+
