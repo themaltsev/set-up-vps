@@ -256,27 +256,33 @@ alias python='/usr/bin/python3.9'
 #для pip
 
 alias pip='/usr/bin/pip3'
-$
-apt install python3-venv
-$
-mkdir my_django_app
-$
-pip3 install django
 
 
-#windows C:\Users\admin\Desktop\Back-django\filmsapp\env\Scripts\activate.bat
-#linux env/bin source activate
+$ apt install python3-venv
+$ mkdir my_django_app
+$ python3 -m venv venv
+$ venv/bin source activate
+$ pip install django
+$ pip install djangorestframework
 
-pip install django
+$ cd куда надо
+$ django-admin startproject back
+pip3 freeze > requirements.txt
 
-pip install djangorestframework
 
-pip install django-rest-knox
+#### DATA BASE #######
+pip install --upgrade setuptools
+apt install gcc libssl-dev
+apt-get install python3-dev default-libmysqlclient-dev build-essential
+pip install mysqlclient
+#### DATA BASE #######
 
-pip freeze > requirements.txt
+$ back python3 manage.py makemigrations
+$ back python3 manage.py migrate
 
-python manage.py startapp films
+
+python3 manage.py startapp "new__app"
 
 tree -L 3
 
-python manage.py runserver 0.0.0.0:8000
+python3 manage.py runserver 0.0.0.0:8000
