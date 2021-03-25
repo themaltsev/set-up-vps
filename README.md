@@ -317,6 +317,10 @@ pip install --upgrade setuptools
 apt install gcc libssl-dev
 apt-get install python3-dev default-libmysqlclient-dev build-essential
 pip install mysqlclient
+
+
+
+
 #### DATA BASE #######
 
 $ back python3 manage.py makemigrations
