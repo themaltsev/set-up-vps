@@ -203,8 +203,10 @@ PHP 7.4.16 (cli) (built: Mar  5 2021 08:37:59) ( NTS )
 
 
 
-
 ######### --PYTHON 3.9.* --#########
+
+$ apt install build-essential checkinstall
+$ apt install libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
 
 apt install wget build-essential libreadline-gplv2-dev libncursesw5-dev \
      libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev 
@@ -215,16 +217,17 @@ wget https://www.python.org/ftp/python/3.9.2/Python-3.9.2.tgz
 
 tar xzf Python-3.9.2.tgz 
 
-cd Python-3.9.2
-./configure --enable-optimizations 
+$ cd Python-3.9.2
+
+$ ./configure --enable-optimizations 
 
 #Это если хотите новый питон по умолчанию
 #Python-3.9 in default
-make install 
+$ make install 
 
 Это только если вам нужна алтернативная вессия
 #Python-3.9 alternativa
-#make altinstall 
+$ make altinstall 
 
 cd /
 
@@ -245,8 +248,6 @@ pip 21.0.1 from /usr/local/lib/python3.9/site-packages/pip (python 3.9)
 ######### --PYTHON 3.9.* --#########
 
 
-
-
 # Не обязательно я делаю алиас чтобы последний пинот был доступен по вызову python
 #переходим в root добавляем в этот файл ".bashrc" строку ниже
 
@@ -255,17 +256,16 @@ alias python='/usr/bin/python3.9'
 #для pip
 
 alias pip='/usr/bin/pip3'
+$
+apt install python3-venv
+$
+mkdir my_django_app
+$
+pip3 install django
 
-
-django-admin startproject filmsapp 
-&& cd filmsapp
-python -m venv env 
 
 #windows C:\Users\admin\Desktop\Back-django\filmsapp\env\Scripts\activate.bat
-
 #linux env/bin source activate
-
-pip install --upgrade pip
 
 pip install django
 
