@@ -189,6 +189,7 @@ $ ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
 
 ##########-NGINX-##########
 
+
 #### CERTBOR FOR SSL HTTPS #######
 
 apt install certbot 
@@ -196,6 +197,13 @@ apt install certbot
 #certbot-python-nginx
 
 certbot --nginx 
+
+$ nano /etc/letsencrypt/renewal/example.com.conf
+
+Вставьте в конец файла строку:
+
+renew_hook = systemctl reload nginx
+
 
 #### CERTBOR FOR SSL HTTPS #######
 
