@@ -111,7 +111,7 @@ upload_max_filesize = 1500MB
 #nginx.conf
 
 user  www-data;
-worker_processes  1; КОЛВО ЯДЕР +1
+worker_processes  3; КОЛВО ЯДЕР *2 +1
 
 ДОБАВИМ ПАПКУ БЕЗ ВСЯКИХ .CONF И БЕЗ ВСЯКИХ ССЫЛОК
 include /etc/nginx/configs/*;
@@ -155,8 +155,25 @@ include fastcgi_params;
 }
 
 
-СИМВОЛКА ЕСЛИ НУЖНА
-ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
+##
+# Gzip Settings
+##
+gzip on;
+gzip_disable "msie6";
+gzip_vary on;
+gzip_proxied any;
+gzip_comp_level 6;
+gzip_buffers 16 8k;
+gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+# создаём папку configs в etc/nginx/
+# и добавляем строку ниже для автоподключения конфигов без символьных ссылок
+
+include /etc/nginx/configs/*;
+
+
+#СИМВОЛКА ЕСЛИ НУЖНА
+$ ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
 
 
 
