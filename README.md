@@ -108,7 +108,11 @@ upload_max_filesize = 1500MB
 
 ##########-NGINX-##########
 
+###### Инсталлер nginx c модулями https://github.com/angristan/nginx-autoinstall
+
+
 #nginx.conf
+
 
 user  www-data;
 worker_processes  3; КОЛВО ЯДЕР *2 +1
