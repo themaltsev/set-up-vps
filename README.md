@@ -110,12 +110,12 @@ upload_max_filesize = 1500MB
 
 ###### Инсталлер nginx c модулями https://github.com/angristan/nginx-autoinstall
 
+
 $ wget https://raw.githubusercontent.com/angristan/nginx-autoinstall/master/nginx-autoinstall.sh
 chmod +x nginx-autoinstall.sh
 ./nginx-autoinstall.sh
 
-
-
+./configure --prefix=$PWD --build="quiche-$(git --git-dir=../quiche/.git rev-parse --short HEAD)"  --with-http_v3_module --with-quiche=../quiche --with-openssl=../quiche/deps/boringssl --with-http_v2_module --with-http_ssl_module
 
 #nginx.conf
 
