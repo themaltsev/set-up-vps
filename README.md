@@ -130,13 +130,13 @@ worker_processes  3; КОЛВО ЯДЕР *2 +1
 ДОБАВИМ ПАПКУ БЕЗ ВСЯКИХ .CONF И БЕЗ ВСЯКИХ ССЫЛОК
 include /etc/nginx/configs/*;
 
-apt install ca-certificates apt-transport-https 
+$ apt install ca-certificates apt-transport-https 
 
 Add the following line to /etc/apt/sources.list:
-deb https://nginx.org/packages/debian/ stretch nginx
+$ deb https://nginx.org/packages/debian/ stretch nginx
 Install GPG key of the repository:
 
-wget https://nginx.org/keys/nginx_signing.key
+$ wget https://nginx.org/keys/nginx_signing.key
  apt-key add nginx_signing.key
 #Update the package index:
 
