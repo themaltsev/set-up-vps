@@ -232,9 +232,17 @@ update-alternatives --config php
 PHP 7.4.16 (cli) (built: Mar  5 2021 08:37:59) ( NTS )
 
 # это не обязательно
+
 #apt install php7.4-cli php7.4-common php7.4-curl php7.4-mbstring php7.4-mysql php7.4-xml
 
-Если проблемы удаляем php 8.0
+% etc/php/php8.0-fpm/php.ini
+
+upload_max_filesize = 500M
+
+post_max_size = 500M
+
+max_execution_time = 90
+
 
 ########-PHP-last-3######
 
