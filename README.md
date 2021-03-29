@@ -486,6 +486,17 @@ $ dpkg-reconfigure mysql-apt-config
 
 $ apt-get update
 
+$ apt install mysql-server
+
+Как создать нового пользователя?
+Для этого нужно выполнить 2 действия
+
+1) собственно создать командой
+
+CREATE USER 'Myuser'@'localhost' IDENTIFIED BY 'password';
+
+2) дать пользователю привилегии, права, например так
+GRANT ALL PRIVILEGES ON * . * TO 'newuser'@'localhost';
 
 %% Изменение пароля root
 # mysql -u root
@@ -498,7 +509,6 @@ MariaDB [mysql]> quit;
 Bye
 # systemctl restart mariadb
 Вернуть обратно так:
-
 # mysql -u root -p
 Enter password: 
 ( вводим пароль my-new-cool-password )
