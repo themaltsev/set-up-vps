@@ -4,8 +4,6 @@
 #PORTS
  ss -tulpn | grep :80
 
-
-
 Проверяем обновы
 apt update
 
@@ -116,8 +114,8 @@ upload_max_filesize = 1500MB
 
 
 $ wget https://raw.githubusercontent.com/angristan/nginx-autoinstall/master/nginx-autoinstall.sh
-chmod +x nginx-autoinstall.sh
-./nginx-autoinstall.sh
+# chmod +x nginx-autoinstall.sh
+# ./nginx-autoinstall.sh
 
 ./configure --prefix=$PWD --build="quiche-$(git --git-dir=../quiche/.git rev-parse --short HEAD)"  --with-http_v3_module --with-quiche=../quiche --with-openssl=../quiche/deps/boringssl --with-http_v2_module --with-http_ssl_module
 
@@ -137,7 +135,7 @@ $ deb https://nginx.org/packages/debian/ stretch nginx
 Install GPG key of the repository:
 
 $ wget https://nginx.org/keys/nginx_signing.key
- apt-key add nginx_signing.key
+$ apt-key add nginx_signing.key
 #Update the package index:
 
 apt-get update
@@ -224,7 +222,7 @@ wget -q https://packages.sury.org/php/apt.gpg -O- | apt-key add -
 echo "deb https://packages.sury.org/php/ stretch main" | tee /etc/apt/sources.list.d/php.list
 
 apt update
-apt install php7.4
+apt install php7.4 php7.4-fpm
 
 №перенаправить» на другую альтернативу можно, например, так:
 
@@ -456,4 +454,35 @@ echo "CHMOD directories...";
 find "$dir" -type d -exec chmod 0755 '{}' \;
 echo "CHMOD files...";
 find "$dir" -type f -exec chmod 0644 '{}' \;
+
+
+#### MYSQL ######
+
+cd /tmp
+wget https://dev.mysql.com/get/mysql-apt-config_0.8.10-1_all.deb
+
+Файл будет загружен в текущий каталог. Просмотрите содержимое каталога:
+
+ls
+mysql-apt-config_0.8.10-1_all.deb
+
+Теперь можно установить полученный файл:
+
+$ dpkg -i mysql-apt-config*
+
+Команда dpkg используется для установки, удаления и проверки пакетов программного обеспечения .deb. Флаг –i указывает компоненты, которые нужно установить.
+
+Во время установки вам будет представлен экран конфигурации, с помощью которого вы можете указать, какую версию MySQL нужно использовать, и установить репозитории других инструментов, связанных с MySQL. По умолчанию файл добавит информацию только о репозитории последней стабильной версии MySQL. В данном случае этого достаточно; выберите Ok и нажмите Enter.
+
+После этого репозиторий будет добавлен на сервер. Обновите индекс пакетов:
+
+$ apt update
+
+Репозиторий MySQL добавлен. Теперь с его помощью можно установить последнюю версию MySQL. Чтобы обновить конфигурацию этих репозиториев, просто запустите:
+
+$ dpkg-reconfigure mysql-apt-config
+
+Затем выберите новые параметры и обновите индекс пакетов:
+
+$ apt-get update
 
