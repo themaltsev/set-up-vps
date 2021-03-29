@@ -486,3 +486,44 @@ $ dpkg-reconfigure mysql-apt-config
 
 $ apt-get update
 
+
+%% Изменение пароля root
+# mysql -u root
+MariaDB [(none)]> use mysql;
+Database changed
+MariaDB [mysql]> update user set password=PASSWORD("my-new-cool-password") where User='root';
+MariaDB [mysql]> flush privileges;
+MariaDB [mysql]> update user set plugin='' where User='root';
+MariaDB [mysql]> quit;
+Bye
+# systemctl restart mariadb
+Вернуть обратно так:
+
+# mysql -u root -p
+Enter password: 
+( вводим пароль my-new-cool-password )
+MariaDB [(none)]> use mysql;
+Database changed
+MariaDB [mysql]> update user set plugin='unix_socket' where User='root';
+MariaDB [mysql]> quit;
+Bye
+# systemctl restart mariadb
+Проверяем вход root без пароля:
+# mysql -u root
+MariaDB [(none)]> quit;
+Bye
+
+#### PHPMYADMIN #########
+
+wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz
+
+Распакуйте загруженный архив:
+
+tar xvf phpMyAdmin-4.9.0.1-all-languages.tar.gz
+
+Вы получите ряд новых файлов и каталогов, они будут в родительском каталоге phpMyAdmin-4.9.0.1-all-languages.
+
+Запустите следующую команду. Она переместит каталог phpMyAdmin-4.9.0.1-all-languages и все его подкаталоги в /usr/share/. В этом расположении phpMyAdmin по умолчанию надеется найти свои конфигурационные файлы. Также команда переименует каталог в phpmyadmin.
+
+sudo mv phpMyAdmin-4.9.0.1-all-languages/ /usr/share/phpmyadmin
+
