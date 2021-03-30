@@ -511,6 +511,14 @@ GRANT ALL PRIVILEGES ON * . * TO 'newuser'@'localhost';
 ### Изменить пароль пользователя!
 ALTER USER 'user-name'@'localhost' IDENTIFIED BY 'NEW_USER_PASSWORD';FLUSH PRIVILEGES;
 
+# etc/mysql/cond.d/mysqldump.cnf
+
+[mysqldump]
+quick
+quote-names
+max_allowed_packet	= 800M 
+
+>>>>>>
 
 %% Изменение пароля root
 # mysql -u root
