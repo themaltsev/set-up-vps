@@ -53,8 +53,11 @@ apt install curl wget nano git  tree -y
 
 ####last NODE JS ####
 
-apt-get install curl software-properties-common
-curl -sL https://deb.nodesource.com/setup_15.x | bash
+$ apt-get install curl software-properties-common
+$ curl -sL https://deb.nodesource.com/setup_15.x | bash
+$ apt install nodejs
+
+$ nodejs -v
 
 
 # Не обязательно Красивый шел для консоли Install oh-my-zsh:
@@ -563,7 +566,18 @@ $ unzip phpmyadmin*
 # Даём права 
 $ chown -R www-data:www-data /usr/share/phpmyadmin
 
+# php.ini 
 
+upload_max_filesize = 500M
+post_max_size = 500M
+memory_limit = 500M
+upload_tmp_dir =/tmp
+
+$ chmod -R 777 /tmp*
+
+#phpmyadmin config.inc
+
+$cfg['UploadDir'] = './tmp/';
 
 
 
