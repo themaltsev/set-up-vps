@@ -241,11 +241,10 @@ $ apt install php8.0-cli php8.0-common php8.0-curl php8.0-mbstring php8.0-mysql 
 
 % etc/php/php8.0-fpm/php.ini
 
-upload_max_filesize = 500M
-
-post_max_size = 500M
-
-max_execution_time = 90
+max_execution_time = 600
+max_input_time = 600
+memory_limit = 1024M
+post_max_size = 1024M
 
 # Добавить в нужный конфиг nginx
 location ~* \.php$ {
