@@ -511,7 +511,7 @@ GRANT ALL PRIVILEGES ON * . * TO 'newuser'@'localhost';
 ### Изменить пароль пользователя!
 ALTER USER 'user-name'@'localhost' IDENTIFIED BY 'NEW_USER_PASSWORD';FLUSH PRIVILEGES;
 
-# etc/mysql/cond.d/mysqldump.cnf
+# etc/mysql/cond.d/mysql.cnf
 
 [mysqldump]
 quick
