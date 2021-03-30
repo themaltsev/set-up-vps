@@ -8,7 +8,7 @@
 apt update
 
 Обновляем пакеты
-apt upgrade
+apt upgradeexport LANG=ru_RU.UTF-8
 
 
 #СМЕНА ПАРОЛЯ
@@ -19,24 +19,24 @@ passwd
 #убеждаемся что отсутствует русский язык
 #Устанавливаем поддержку русского языка
 
-apt-get install locales
-locale-gen ru_RU.UTF-8
+$ apt-get install locales
+$ locale-gen ru_RU.UTF-8
 
-LANG="ru_RU.UTF-8"
+$ LANG="ru_RU.UTF-8"
 после чего запускаем:
 
-dpkg-reconfigure locales
+$ dpkg-reconfigure locales
 Выбираем русский язык и другие параметры
 
-apt-get install console-cyrillic
+$ apt-get install console-cyrillic
 Выполняем настройку языкового пакета:
 
 dpkg-reconfigure console-cyrillic
 
 
 Если в PuTTy язык не сменился на русский попробуйте выполнить команду:
-export LC_ALL=ru_RU.UTF-8
-export LANG=ru_RU.UTF-8
+$ export LC_ALL=ru_RU.UTF-8
+$ export LANG=ru_RU.UTF-8
 
 
 
@@ -117,6 +117,7 @@ $ wget https://raw.githubusercontent.com/angristan/nginx-autoinstall/master/ngin
 # chmod +x nginx-autoinstall.sh
 # ./nginx-autoinstall.sh
 
+
 ./configure --prefix=$PWD --build="quiche-$(git --git-dir=../quiche/.git rev-parse --short HEAD)"  --with-http_v3_module --with-quiche=../quiche --with-openssl=../quiche/deps/boringssl --with-http_v2_module --with-http_ssl_module
 
 #nginx.conf
@@ -128,19 +129,21 @@ worker_processes  3; КОЛВО ЯДЕР *2 +1
 ДОБАВИМ ПАПКУ БЕЗ ВСЯКИХ .CONF И БЕЗ ВСЯКИХ ССЫЛОК
 include /etc/nginx/configs/*;
 
+
+
 $ apt install ca-certificates apt-transport-https 
 
-Add the following line to /etc/apt/sources.list:
-$ deb https://nginx.org/packages/debian/ stretch nginx
+# Add the following line to /etc/apt/sources.list:
+# deb https://nginx.org/packages/debian/ stretch nginx
 Install GPG key of the repository:
 
 $ wget https://nginx.org/keys/nginx_signing.key
 $ apt-key add nginx_signing.key
 #Update the package index:
 
-apt-get update
+$ apt-get update
 #Install nginx deb package:
-apt-get install nginx
+$ apt-get install nginx
 
 ➜  ~ nginx -v
 nginx version: nginx/1.18.0
@@ -193,12 +196,10 @@ $ ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
 
 
 #### CERTBOR FOR SSL HTTPS #######
+$ apt install certbot 
+$ apt install python-certbot-nginx
 
-apt install certbot 
-
-#certbot-python-nginx
-
-certbot --nginx 
+$ certbot --nginx 
 
 $ nano /etc/letsencrypt/renewal/example.com.conf
 
@@ -215,14 +216,14 @@ $ cat /var/log/nginx/error.log
 $ cat /var/log/php7.4-fpm.log
 
 
-########-PHP-last-3######
+########-PHP-last-######
 
-apt install ca-certificates apt-transport-https 
-wget -q https://packages.sury.org/php/apt.gpg -O- | apt-key add -
-echo "deb https://packages.sury.org/php/ stretch main" | tee /etc/apt/sources.list.d/php.list
+$ apt install ca-certificates apt-transport-https 
+$ wget -q https://packages.sury.org/php/apt.gpg -O- | apt-key add -
+$ echo "deb https://packages.sury.org/php/ stretch main" | tee /etc/apt/sources.list.d/php.list
 
-apt update
-apt install php7.4 php7.4-fpm
+$ apt update
+$ apt install php8.0 php8.0-fpm
 
 №перенаправить» на другую альтернативу можно, например, так:
 
@@ -233,7 +234,7 @@ PHP 7.4.16 (cli) (built: Mar  5 2021 08:37:59) ( NTS )
 
 # это не обязательно
 
-#apt install php7.4-cli php7.4-common php7.4-curl php7.4-mbstring php7.4-mysql php7.4-xml
+$ apt install php8.0-cli php8.0-common php8.0-curl php8.0-mbstring php8.0-mysql php8.0-xml
 
 % etc/php/php8.0-fpm/php.ini
 
@@ -242,6 +243,16 @@ upload_max_filesize = 500M
 post_max_size = 500M
 
 max_execution_time = 90
+
+# Добавить в нужный конфиг nginx
+location ~* \.php$ {
+root /var/www/back;
+fastcgi_split_path_info ^(.+\.php)(/.+)$;
+fastcgi_pass unix:/run/php/php7.4-fpm.sock; # подключаем сокет php-fpm
+fastcgi_index index.php;
+fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+include fastcgi_params;
+}
 
 
 ########-PHP-last-3######
@@ -449,30 +460,19 @@ systemctl restart gunicorn
 ### restart ####
 
 
-#### СКрипт который задаёт права для папок и файлов 
-#!/bin/bash
-
-dir=/var/www/site
-user=root
-
-echo "Set permissions for $dir...";
-echo "CHOWN files...";
-chown -R $user:$user "$dir";
-echo "CHMOD directories...";
-find "$dir" -type d -exec chmod 0755 '{}' \;
-echo "CHMOD files...";
-find "$dir" -type f -exec chmod 0644 '{}' \;
-
 
 #### MYSQL ######
 
-cd /tmp
-wget https://dev.mysql.com/get/mysql-apt-config_0.8.10-1_all.deb
+$ cd /tmp
+$ wget https://dev.mysql.com/get/mysql-apt-config_0.8.10-1_all.deb
 
 Файл будет загружен в текущий каталог. Просмотрите содержимое каталога:
 
-ls
-mysql-apt-config_0.8.10-1_all.deb
+$ ls
+$ mysql-apt-config_0.8.10-1_all.deb
+
+# Если просит поставить!
+$ apt install lsb-release
 
 Теперь можно установить полученный файл:
 
@@ -490,7 +490,7 @@ $ apt update
 
 $ dpkg-reconfigure mysql-apt-config
 
-Затем выберите новые параметры и обновите индекс пакетов:
+#Затем выберите новые параметры и обновите индекс пакетов:
 
 $ apt-get update
 
@@ -505,6 +505,10 @@ CREATE USER 'Myuser'@'localhost' IDENTIFIED BY 'password';
 
 2) дать пользователю привилегии, права, например так
 GRANT ALL PRIVILEGES ON * . * TO 'newuser'@'localhost';
+
+### Изменить пароль пользователя!
+ALTER USER 'user-name'@'localhost' IDENTIFIED BY 'NEW_USER_PASSWORD';FLUSH PRIVILEGES;
+
 
 %% Изменение пароля root
 # mysql -u root
@@ -531,7 +535,8 @@ Bye
 MariaDB [(none)]> quit;
 Bye
 
-#### PHPMYADMIN #########
+
+#######-PHPMYADMIN-#########
 
 wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz
 
@@ -544,4 +549,26 @@ tar xvf phpMyAdmin-4.9.0.1-all-languages.tar.gz
 Запустите следующую команду. Она переместит каталог phpMyAdmin-4.9.0.1-all-languages и все его подкаталоги в /usr/share/. В этом расположении phpMyAdmin по умолчанию надеется найти свои конфигурационные файлы. Также команда переименует каталог в phpmyadmin.
 
 sudo mv phpMyAdmin-4.9.0.1-all-languages/ /usr/share/phpmyadmin
+
+# Или вручну скачать с оф сайта архив и залить через файлзилу
+
+$ apt install unzip zip
+
+$ ls phpmyadmin*
+# распаковать 
+$ unzip phpmyadmin*
+
+#все файлы в папку /usr/share/phpmyadmin/
+
+# Даём права 
+$ chown -R www-data:www-data /usr/share/phpmyadmin
+
+
+
+
+
+
+
+
+
 
