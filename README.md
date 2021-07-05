@@ -1,5 +1,8 @@
 # DEBIAN VPS SET UP NGINX 1.18.* HTTP2 HTTPS PHP 7.4*   PYTHON 3.9.* LAST MYSQL PHPMYADMIN POSTGRESQL PHPPGADMIN  DJANGO 3.1.* GUICONR VENV
 
+##backup 
+
+zip -r backup05.07.2021.zip /var/www/fxde.ru
 
 #PORTS
  ss -tulpn | grep :80
