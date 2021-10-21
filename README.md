@@ -213,6 +213,14 @@ $ nano /etc/letsencrypt/renewal/example.com.conf
 
 renew_hook = systemctl reload nginx
 
+#автообновление сертификата
+# обновляем каждый понедельник 
+
+$ crontab -e
+# добавим строку
+00**1 cerbot -q renew
+# сохраняем
+
 
 #### CERTBOR FOR SSL HTTPS #######
 
