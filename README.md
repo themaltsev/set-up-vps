@@ -13,6 +13,10 @@ apt update
 Обновляем пакеты
 apt upgradeexport LANG=ru_RU.UTF-8
 
+#Версия php по умолчанию
+
+update-alternatives --config php
+
 
 #СМЕНА ПАРОЛЯ
 passwd 
